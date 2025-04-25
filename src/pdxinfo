@@ -1,0 +1,7 @@
+name=Advanced Lawnmower Simulator
+author=Digific Ltd
+description=A powerful and accurate lawn mowing simulation for the Playdate.
+bundleID=com.advancedlawnmowersimulator.playdate
+version=0.9
+imagePath=assets/system
+buildNumber=20250428014447

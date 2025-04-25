@@ -1,0 +1,68 @@
+"game-title" = "ADVANCED LAWN\nMOWER SIMULATOR"
+
+"about" = "THIS IS A POWERFUL AND ACCURATE LAWN MOWING SIMULATION.\n\nCHOOSE FROM SEVERAL DIFFERENT MACHINES AND 'GO GET THAT GRASS'"
+
+"choose-machine" = "Choose a machine:"
+"cursor" = ">"
+
+"mower-1" = "CAMPARI GRASSMASTER"
+"mower-2" = "DAF TURFOMATIC"
+"mower-3" = "ACME MEGA-CUT 3000"
+"mower-4" = "ACME LAWN-ACE"
+"mower-5" = "FLYMO GRASSCHUM"
+"mower-6" = "PATIO SPRINTETTE"
+
+"mower-broken" = "I'M SORRY, I'M AFRAID THAT THE\n\nIS BROKEN AT THE MOMENT."
+"mower-working" = "THE\n\nIS WORKING WELL."
+
+"instructions-for-btns" = "PRESS THE 'A' BUTTON TO ENGAGE THE MOTOR.\n\nRELEASE BUTTON TO DISENGAGE IT."
+"instructions-for-crank" = "CRANK FORWARDS TO ENGAGE THE MOTOR.\n\nSTOP CRANKING TO DISENGAGE IT."
+
+"well-mown" = "WELL MOWN!"
+"killed" = "YOU HAVE BEEN KILLED"
+
+"start" = "Press 'A' to start..."
+"restart" = "Press 'A' to restart"
+"return" =  "Press 'B' to return"
+
+"scroll-1" = "WELL DONE. YOU'VE EARNED YOURSELF A CORNED BEEF SANDWICH!"
+"scroll-2" = "A BIT OF A SHODDY JOB, THAT. DO IT AGAIN!"
+"scroll-3" = "YOU'VE BROKEN THE MOWER, YOU STUPID LITTLE GIT. GO AWAY AND DON'T DARKEN MY DOOR AGAIN"
+"scroll-4" = "TEA AND CAKES FOR YOU, MATEY. THAT WAS A SUPER BIT OF GRASSWORK. IN FACT, HERE'S A TENNER!"
+"scroll-5" = "MOWER TESTER CHUCK SAYS 'OH OH! YOU SURE BOUGHT THE LAWN THAT TIME! I DON'T KNOW YOU!'"
+"scroll-6" = "CALL THAT A MOW-JOB (oo-er)? I COULD DO BETTER WITH MY GRANNIES NAIL CLIPPERS!"
+"scroll-7" = "WORRA CUT! VIDAL SASSOON'S NOT A PATCH ON YOUR GOOD SELF WE'LL SAY!"
+"scroll-8" = "THAT'S A BIT OF AN ERRATIC CUT. HELEN KELLER COULD HAVE DONE BETTER!"
+"scroll-9" = "BOING     BOING     BOING      BOING    BOING"
+"scroll-10" = "SUPER. SMASHING. LOVELY....... BENDY BULLIES ALL ROUND. SMASHING!"
+
+"scroll-prefix-1" = "          "
+"scroll-prefix-2" = "          "
+"scroll-prefix-3" = "    "
+"scroll-prefix-4" = "    "
+"scroll-prefix-5" = "   "
+"scroll-prefix-6" = "    "
+"scroll-prefix-7" = "     "
+"scroll-prefix-8" = "    "
+"scroll-prefix-9" = "    "
+"scroll-prefix-10" = "    "
+
+"statistics-title" = "STATISTICS"
+"statistics-total" = "Total"
+"statistics-good" = "Good"
+"statistics-bad" = "Bad"
+"statistics-deaths" = "Deaths"
+"statistics-total-suffix" = ":  "
+"statistics-good-suffix" = ":   "
+"statistics-bad-suffix" = ":    "
+"statistics-deaths-suffix" = ": "
+
+"statistics-too-many-1" = "LOTS"
+"statistics-too-many-2" = "TONS"
+"statistics-too-many-3" = "MANY"
+"statistics-too-many-4" = "WADS"
+"statistics-too-many-5" = "YES!"
+
+"credits-title" = "CREDITS"
+
+"credits" = "  ZX Spectrum game by\n Duncan MacDonald (RIP)\n  Your Sinclair, 1988\n\n Playdate port written\n     by Andy Thomas\n\n  © Digific Ltd, 2025"
