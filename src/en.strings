@@ -3,7 +3,6 @@
 "about" = "THIS IS A POWERFUL AND ACCURATE LAWN MOWING SIMULATION.\n\nCHOOSE FROM SEVERAL DIFFERENT MACHINES AND 'GO GET THAT GRASS'"
 
 "choose-machine" = "Choose a machine:"
-"cursor" = ">"
 
 "mower-1" = "CAMPARI GRASSMASTER"
 "mower-2" = "DAF TURFOMATIC"
@@ -18,7 +17,7 @@
 "instructions-for-btns" = "PRESS THE 'A' BUTTON TO ENGAGE THE MOTOR.\n\nRELEASE BUTTON TO DISENGAGE IT."
 "instructions-for-crank" = "CRANK FORWARDS TO ENGAGE THE MOTOR.\n\nSTOP CRANKING TO DISENGAGE IT."
 
-"well-mown" = "WELL MOWN!"
+"well-mown" = "WELL MOWN"
 "killed" = "YOU HAVE BEEN KILLED"
 
 "start" = "Press 'A' to start..."
@@ -47,22 +46,27 @@
 "scroll-prefix-9" = "    "
 "scroll-prefix-10" = "    "
 
-"statistics-title" = "STATISTICS"
-"statistics-total" = "Total"
-"statistics-good" = "Good"
-"statistics-bad" = "Bad"
-"statistics-deaths" = "Deaths"
-"statistics-total-suffix" = ":  "
-"statistics-good-suffix" = ":   "
-"statistics-bad-suffix" = ":    "
-"statistics-deaths-suffix" = ": "
+"stats-title" = "STATISTICS"
+"stats-good" = "Good"
+"stats-bad" = "Bad"
+"stats-deaths" = "Deaths"
+"stats-total" = "Total"
+"stats-good-suffix" = ":   "
+"stats-bad-suffix" = ":    "
+"stats-deaths-suffix" = ": "
+"stats-total-suffix" = ":  "
 
-"statistics-too-many-1" = "LOTS"
-"statistics-too-many-2" = "TONS"
-"statistics-too-many-3" = "MANY"
-"statistics-too-many-4" = "WADS"
-"statistics-too-many-5" = "YES!"
+"stats-too-many-1" = "LOTS"
+"stats-too-many-2" = "TONS"
+"stats-too-many-3" = "MANY"
+"stats-too-many-4" = "SOME"
+"stats-too-many-5" = "YES!"
+"stats-too-many-6" = "BOOP"
 
 "credits-title" = "CREDITS"
 
-"credits" = "  ZX Spectrum game by\n Duncan MacDonald (RIP)\n  Your Sinclair, 1988\n\n Playdate port written\n     by Andy Thomas\n\n  © Digific Ltd, 2025"
+"credits" = "ZX SPECTRUM GAME BY\nDUNCAN MACDONALD (RIP)\nYOUR SINCLAIR, 1988\n\nPLAYDATE PORT WRITTEN\nBY ANDY THOMAS\n\n© DIGIFIC LTD, 2025"
+
+"menu-item-beeper" = "Beeper"
+"menu-item-crankiness" = "Crankiness"
+"menu-item-debug" = "Debug"
