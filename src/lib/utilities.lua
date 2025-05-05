@@ -1,11 +1,11 @@
 local debugging = false
 
-function isDebugging()
-	return debugging
-end
+if false then
+	debugging = true
 
-function setDebugging(value)
-	debugging = (value == 1 or value == true)
+	function debugMode(value)
+		debugging = (value == 1 or value == true)
+	end
 end
 
 function log(value)
@@ -22,7 +22,17 @@ function ternary(value, responseIfTrue, responseIfFalse)
 	end
 end
 
+function minmax(min, max)
+	if min > max then
+    	min, max = max, min
+  	end
+
+  	return min, max
+  end
+
 function clamp(value, min, max)
+	min, max = minmax(min, max)
+
     return math.max(
     	math.min(value, max),
     	min
@@ -30,9 +40,7 @@ function clamp(value, min, max)
 end
 
 function ring(value, min, max)
-	if min > max then
-    	min, max = max, min
-  	end
+	min, max = minmax(min, max)
 
-	return min + (value - min) % (max - min)
+	return min + (value - min) % max
 end

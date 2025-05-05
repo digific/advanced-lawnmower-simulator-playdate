@@ -5,249 +5,201 @@ local snd <const> = pd.sound
 local spr <const> = gfx.sprite
 
 class('zx', {
-	font = gfx.font.new('assets/font/zxspeccy'),
-	ink = 'black',
-	paper = 'clear',
-	beeperSynth = nil,
-	volume = 0.6,
-	pauseTimer = nil,
+	colour = {
+		ink = 'black',
+		paper = 'clear',
+	},
+	font = gfx.font.new('assets/zxspeccy'),
 	scale = 2,
+	flashed = false,
 }).extends()
 
 function zx:init()
 	zx.super.init(self)
 	zx.chrSize = zx.font:getHeight()
+
+	zx.beeper = {
+		volume = 0.6,
+
+		enabled = function(status)
+			if status == nil then
+				return zx.beeper.synth ~= nil
+			elseif status == 1 or status == true and zx.beeper.synth == nil then
+				zx.beeper.synth = snd.synth.new(snd.kWaveSquare)
+			elseif zx.beeper.synth ~= nil then
+				zx.beeper.stop()
+				zx.beeper.synth = nil
+			end
+		end,
+
+		beep = function(duration, pitch)
+			if not zx.beeper.enabled() or zx.beeper.beeping() then
+				return
+			end
+
+			zx.beeper.synth:playMIDINote(
+				pitch + 60,
+				zx.beeper.volume,
+				duration
+			)
+		end,
+
+		beeping = function()
+			return zx.beeper.synth ~= nil and zx.beeper.synth:isPlaying()
+		end,
+
+		stop = function()
+			if zx.beeper.beeping() then
+				zx.beeper.synth:stop()
+			end
+		end
+	}
+
+	zx.flashing = {
+		enabled = function(status)
+			if status == nil then
+				return zx.flashing.timer ~= nil
+			elseif status == 1 or status == true and zx.flashing.timer == nil then
+				zx.flashing.timer = pd.timer.new(
+					zx.flashing.interval,
+					zx.flashing.callback
+				)
+
+				zx.flashing.timer.repeats = true
+				zx.flashing.timer.discardOnCompletion = false
+			elseif zx.flashing.timer ~= nil then
+				zx.flashing.timer:remove()
+				zx.flashing.timer = nil
+			end
+		end,
+
+		interval = self:getFrameMs(16),
+
+		callback = function()
+			zx.flashed = not zx.flashed
+		end,
+	}
 end
 
 ----------------------------------------------------------------------------------------------------
 -- BEEPER
 ----------------------------------------------------------------------------------------------------
-function zx:beeper(enabled)
-	if enabled == nil then
-		return self.beeperSynth ~= nil
-	elseif enabled == 1 or enabled == true then
-		if self.beeperSynth == nil then
-			self.beeperSynth = snd.synth.new(snd.kWaveSquare)
-		end
-	else
-		if self.beeperSynth ~= nil and self.beeperSynth:isPlaying() then
-			self.beeperSynth:stop()
-		end
-
-		self.beeperSynth = nil
-	end
-end
-
 function zx:beep(duration, pitch)
-	if self.beeperSynth == nil or self.beeperSynth:isPlaying() then
-		return
-	end
-
-	self.beeperSynth:playMIDINote(
-		pitch + 60,
-		self.volume,
-		duration
+	self.beeper.beep(
+		duration,
+		pitch
 	)
 end
 
 ----------------------------------------------------------------------------------------------------
 -- TIMING
 ----------------------------------------------------------------------------------------------------
+
 function zx:getFrameMs(value)
 	-- 1 frame = 20ms (ref: https://worldofspectrum.org/faq/reference/48kreference.htm)
 	return value * 20
 end
 
 function zx:pause(frames, callback)
-	if self.pauseTimer == nil then
-		self.pauseTimer = pd.timer.performAfterDelay(
+	if zx.pauseTimer == nil then
+		zx.pauseTimer = pd.timer.performAfterDelay(
 			zx:getFrameMs(frames),
 			function()
-				self.pauseTimer = nil
-				callback()
+				zx.pauseTimer = nil
+
+				if type(callback) == 'function' then
+					callback()
+				end
 			end
 		)
 	end
 end
 
 function zx:skipPause()
-	if self.pauseTimer ~= nil then
-		self.pauseTimer:remove()
+	if zx.pauseTimer ~= nil then
+		zx.pauseTimer:remove()
 	end
 
-	self.pauseTimer = nil
+	zx.pauseTimer = nil
 end
 
 ----------------------------------------------------------------------------------------------------
--- SPRITES
+-- SCREEN
 ----------------------------------------------------------------------------------------------------
-zx.moveSpriteToChr = function(self, x, y)
-	local chrX, chrY = zx:getChrCoords(
-		x,
-		y,
-		self:getScale()
-	)
 
-	local width, height = self:getSize()
-
-	self:moveTo(
-		chrX + width / 2,
-		chrY + height / 2
-	)
-end
-
-----------------------------------------------------------------------------------------------------
--- TEXT
-----------------------------------------------------------------------------------------------------
 function zx:getChrCoords(x, y, scale)
-	local chrSize = zx.chrSize * (scale or zx.scale);
+	local chrSize = zx.chrSize * (scale or zx.scale)
 	return (x * chrSize), (y * chrSize)
 end
 
-function zx:printToSprite(args)
-	local sprite = spr.new()
-	sprite.ref = args.ref or nil
+function zx:ink(colour)
+	zx.colour.ink = colour or zx.colour.ink
 
-	local text = ''
-	local ink = args.ink or zx.ink
-	local paper = args.paper or zx.paper
-	local flash = args.flash or 0
-	local border = args.border or 0
-	local centered = args.centered or 0
-	local x = args.x or 0
-	local y = args.y or 0
-
-	if args.text ~= nil then
-		text = args.text
-	elseif args.ref ~= nil then
-		text = gfx.getLocalizedText(args.ref)
-	end
-
-	local scale = clamp(
-		args.scale or zx.scale,
-		1,
-		2
+	gfx.setColor(
+		zx:gfxColour(zx.colour.ink)
 	)
+end
 
-	local maxChrsPerLine = args.maxChrsPerLine or (scn.getWidth() / zx.chrSize) / scale
+function zx:paper(colour)
+	zx.colour.paper = colour or zx.colour.paper
 
-	maxChrsPerLine -= x
-
-	if border == 1 or centered == 1 then
-		maxChrsPerLine -= x
-	end
-
-	if border == 1 then
-		text = als:borderedText(
-			text,
-			maxChrsPerLine
-		)
-	end
-
-	if centered == 1 then
-		x = (maxChrsPerLine / 2) - (string.len(text) / 2)
-	end
-
-	local width, height = gfx.getTextSizeForMaxWidth(
-		text,
-		math.ceil(maxChrsPerLine * zx.chrSize),
-		nil,
-		zx.font
+	gfx.clear(
+		zx:gfxColour(zx.colour.paper)
 	)
+end
 
-	-- override the height with maxLines if set
-	if args.maxLines then
-		height = zx.chrSize * args.maxLines
+function zx:flash()
+	-- ensure that the flashed ink will be black or white
+	if zx.colour.paper ~= 'clear' then
+		zx.colour.ink, zx.colour.paper = zx.colour.paper, zx.colour.ink
 	end
+end
 
-	-- bordered text heights are getting miscalculated, so patch it using line breaks for now & fix later...
-	if border == 1 then
-		local _, lineBreaks = text:gsub("\n","")
-		height = zx.chrSize * (lineBreaks + 1)
-	elseif args.maxLines then
-		height = zx.chrSize * args.maxLines
-	end
+function zx:gfxColour(value)
+	return gfx['kColor' .. value:gsub("^%l", string.upper)] or nil
+end
 
-	if flash == 1 then
-		sprite.frames = zx:printToImgTable(
-			text,
-			width,
-			height,
-			ink,
-			paper
-		)
+----------------------------------------------------------------------------------------------------
+-- TEXT / DATA PRINTING
+----------------------------------------------------------------------------------------------------
 
-		-- FLASH on a ZX Spectrum swaps the palette every 16 frames (1 frame = 20ms)
-		sprite.animation = gfx.animation.loop.new(
-			zx:getFrameMs(16),
-			sprite.frames,
-			1
-		)
-
-		sprite:setImage(sprite.animation:image())
-
-		sprite.update = function(self)
-			self:setImage(self.animation:image())
-		end
+-- print value to the current context
+function zx:print(value, x, y, width, height)
+	if zx.colour.ink ~= 'black' then
+		gfx.setImageDrawMode(gfx.kDrawModeInverted)
 	else
-		sprite:setImage(
-			zx:printToImg(
-				text,
-				width,
-				height,
-				ink,
-				paper
-			)
+		gfx.setImageDrawMode(gfx.kDrawModeCopy)
+	end
+
+	if type(value) == 'table' and #value == 8 then
+		gfx.setPattern(value)
+
+		gfx.fillRect(
+			x,
+			y,
+			width or zx.chrSize,
+			height or zx.chrSize
+		)
+	else
+		zx.font:drawText(
+			value,
+			x,
+			y,
+			width,
+			height
 		)
 	end
 
-	sprite.moveToChr = zx.moveSpriteToChr
-
-	sprite:setScale(scale)
-
-	sprite:moveToChr(x, y)
-
-	sprite:add()
-
-	return sprite
+	gfx.setImageDrawMode(gfx.kDrawModeCopy)
 end
 
--- print flashing text to an imagetable
-function zx:printToImgTable(text, width, height, ink, paper)
-	local imgTable = gfx.imagetable.new(2)
-
-	for i = 1, #imgTable do
-		if i == 2 then
-			-- ensure that the flashed ink will be black or white
-			if paper == 'clear' then
-				paper = ternary(
-					ink == 'black',
-					'white',
-					'black'
-				)
-			end
-
-			-- swap paper/ink for the flashed image
-			ink, paper = paper, ink
-		end
-
-		imgTable:setImage(
-			i,
-			zx:printToImg(
-				text,
-				width,
-				height,
-				paper,
-				ink
-			)
-		)
+-- print value to a new image
+function zx:printToImg(value, width, height)
+	if type(value) == 'table' and #value == 8 then
+		width = width or zx.chrSize
+		height = height or zx.chrSize
 	end
 
-	return imgTable
-end
-
--- print text to a new image
-function zx:printToImg(text, width, height, ink, paper)
 	local img = gfx.image.new(
 		width,
 		height
@@ -255,14 +207,16 @@ function zx:printToImg(text, width, height, ink, paper)
 
 	gfx.pushContext(img)
 
+	zx:paper()
+
+	zx:ink()
+
 	zx:print(
-		text,
+		value,
 		0,
 		0,
 		width,
-		height,
-		ink,
-		paper
+		height
 	)
 
 	gfx.popContext()
@@ -270,30 +224,184 @@ function zx:printToImg(text, width, height, ink, paper)
 	return img
 end
 
--- print text to the current context
-function zx:print(text, x, y, width, height, ink, paper)
-	ink = ink or zx.ink
-	paper = paper or zx.paper
+----------------------------------------------------------------------------------------------------
+-- SPRITE
+----------------------------------------------------------------------------------------------------
 
-	if ink ~= 'black' then
-		gfx.setImageDrawMode(gfx.kDrawModeInverted)
-	else
-		gfx.setImageDrawMode(gfx.kDrawModeCopy)
-	end
+function zx:sprite(args)
+	local sprite = spr.new()
 
-	-- paper (background colour)
-	gfx.clear(gfx['kColor' .. paper:gsub("^%l", string.upper)])
+	args = args or {}
 
-	-- ink (foreground colour)
-	gfx.setColor(gfx['kColor' .. ink:gsub("^%l", string.upper)])
-
-	zx.font:drawText(
-		text,
-		x,
-		y,
-		width,
-		height
+	local scale = clamp(
+		args.scale or zx.scale,
+		1,
+		2
 	)
 
-	gfx.setImageDrawMode(gfx.kDrawModeCopy)
+	sprite.flashing = args.flashing or false
+	sprite.swapColoursIfFlashReduced = ((args.ink or zx.colour.ink) == 'black')
+
+	sprite.flashed = ternary(
+		(sprite.flashing and sprite.swapColoursIfFlashReduced),
+		zx.flashed,
+		nil
+	)
+
+	sprite.moveToChr = function(sprite, chrX, chrY)
+		local x, y = zx:getChrCoords(
+			chrX,
+			chrY,
+			sprite:getScale()
+		)
+
+		local offsetX, offsetY = sprite:getCenter()
+
+		sprite:moveTo(
+			x + (sprite.width * offsetX),
+			y + (sprite.height * offsetY)
+		)
+	end
+
+	sprite.getTextProperties = function(sprite)
+		-- text value
+		local text = ''
+
+		if args.text ~= nil then
+			text = args.text
+		elseif args.str ~= nil then
+			text = gfx.getLocalizedText(args.str)
+		end
+
+		-- maximum character per line
+		local maxChrsPerLine = args.maxChrsPerLine or (scn.getWidth() / zx.chrSize) / scale
+
+		if type(args.x) == 'number' then
+			maxChrsPerLine -= args.x
+
+			-- make bordered & cenetered text have equal character spacing on each side
+			if args.bordered or args.centered then
+				maxChrsPerLine -= args.x
+			end
+		end
+
+		-- use bordered text?
+		if args.bordered then
+			text = als:borderedText(
+				text,
+				maxChrsPerLine
+			)
+		end
+
+		local width, height = gfx.getTextSizeForMaxWidth(
+			text,
+			math.ceil(maxChrsPerLine * zx.chrSize),
+			nil,
+			zx.font
+		)
+
+		-- bordered text heights are getting miscalculated, so patch it using line breaks for now & fix later...
+		if args.bordered then
+			local _, lineBreaks = text:gsub("\n","")
+			height = zx.chrSize * (lineBreaks + 1)
+		elseif args.maxLines then
+			height = zx.chrSize * args.maxLines
+		end
+
+		sprite.text = {
+			value = text,
+			maxChrsPerLine = maxChrsPerLine,
+			width = width,
+			height = height,
+		}
+	end
+
+	sprite.drawImg = function(sprite, x, y)
+		-- get a scaled version of the sprite's image
+		local img = sprite.img:scaledImage(scale)
+
+		-- set as inverted if flashed
+		img:setInverted(sprite.flashed)
+
+		img:draw(x, y)
+	end
+
+	sprite.draw = function(sprite, x, y, width, height)
+		gfx.setClipRect(
+			x,
+			y,
+			width,
+			height
+		)
+
+		-- draw the sprite's image in position
+		sprite:drawImg(0, 0)
+
+		gfx.clearClipRect()
+	end
+
+	sprite.update = function(sprite)
+		local flashingEnabled = zx.flashing.enabled()
+
+		if flashingEnabled and sprite.flashing and zx.flashed ~= sprite.flashed then
+			sprite.flashed = zx.flashed
+			sprite:markDirty()
+		elseif not flashingEnabled and sprite.flashing ~= sprite.flashed then
+			sprite.flashed = (sprite.flashing and sprite.swapColoursIfFlashReduced)
+			sprite:markDirty()
+		end
+	end
+
+	sprite.print = function(sprite, args)
+		if args.text ~= nil or args.str ~= nil then
+			sprite:getTextProperties()
+
+			-- if text set as centered, calculate a value for args.x
+			if (type(args.x) ~= 'number' or args.centered) then
+				args.x = (sprite.text.maxChrsPerLine / 2) - (string.len(sprite.text.value) / 2)
+			end
+		end
+
+		-- generate 'unflashed' and  'flashed' images
+		local previousColours = {
+			ink = zx.colour.ink,
+			paper = zx.colour.paper,
+		}
+
+		zx.colour = {
+			ink = args.ink or zx.colour.ink,
+			paper = args.paper or zx.colour.paper,
+		}
+
+		sprite.img = zx:printToImg(
+			sprite.text.value,
+			sprite.text.width,
+			sprite.text.height
+		)
+
+		zx.colour = previousColours
+
+		-- scale the sprite up
+		sprite:setSize(
+			sprite.text.width * scale,
+			sprite.text.height * scale
+		)
+
+		sprite:setScale(scale)
+
+		sprite:moveToChr(
+			args.x,
+			args.y
+		)
+
+		sprite:markDirty()
+	end
+
+	if args.text ~= nil or args.str ~= nil then
+		sprite:print(args)
+	end
+
+	sprite:add()
+
+	return sprite
 end
