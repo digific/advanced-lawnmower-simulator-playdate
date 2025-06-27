@@ -1,0 +1,3 @@
+[submodule "vendor/PlaydateSquad/pd-achievements"]
+	path = vendor/PlaydateSquad/pd-achievements
+	url = git@github.com:digific/pd-achievements.git

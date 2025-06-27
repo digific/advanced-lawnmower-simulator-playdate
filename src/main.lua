@@ -32,6 +32,7 @@ import 'CoreLibs/timer'
 import 'CoreLibs/crank'
 
 import 'lib/utilities'
+import 'lib/cheevos'
 import 'lib/zx'
 import 'lib/als'
 
@@ -49,6 +50,7 @@ local backgroundImage
 
 local zx = zx()
 local als = als(zx)
+local cheevos = cheevos()
 
 ----------------------------------------------------------------------------------------------------
 -- BACKGROUND
@@ -94,7 +96,7 @@ end
 ----------------------------------------------------------------------------------------------------
 
 function loadFromStorage(filename, defaults)
-	local data = playdate.datastore.read(filename) or {}
+	local data = pd.datastore.read(filename) or {}
 
 	values = {}
 
@@ -111,7 +113,7 @@ end
 
 function saveToStorage(data)
 	for filename, values in pairs(data) do
-		playdate.datastore.write(
+		pd.datastore.write(
 			values,
 			filename
 		)
@@ -136,6 +138,8 @@ function loadStats()
 	})
 
 	als:setMenuImage(stats)
+
+	cheevos:progressed(stats)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -317,7 +321,7 @@ function showTitleScreen()
 
 		onBtnPress = function(pressed)
 			if scene.btn.state == pd.kButtonUp | pd.kButtonA | pd.kButtonB then
-				showCreditsScene()
+				showCreditsScreen()
 			elseif scene.btn.state == pd.kButtonA then
 				showPickMowerScreen()
 			else
@@ -468,6 +472,8 @@ function showMowerIsBrokenScreen(selectedMower)
 				200,
 				showPickMowerScreen
 			)
+
+			cheevos:earned('chose-broken-mower')
 		end,
 	})
 end
@@ -521,6 +527,8 @@ function showMowerIsWorkingScreen()
 			scene.sprites.instructions = zx:sprite(
 				scene.values.instructionsSpr
 			)
+
+			cheevos:earned('chose-working-mower')
 		end,
 
 		onUpdate = function()
@@ -635,6 +643,7 @@ function showGameScreen()
 
 		onCrankChange = function(change, acceleratedChange)
 			als.motor.engaged = (als.grass.mowable and change > getCrankiness())
+			cheevos:earned('crank-to-mow')
 		end,
 
 		onCrankDocked = function()
@@ -681,6 +690,8 @@ function showKilledScreen()
 			stats.deaths += 1
 
 			als:setMenuImage(stats)
+
+			cheevos:progressed(stats)
 		end,
 	})
 end
@@ -758,11 +769,15 @@ function showCompletedScreen()
 			stats[mowRating] += 1
 
 			als:setMenuImage(stats)
+
+			-- update the achievements
+			cheevos:earned('mow-rating-' .. msg)
+			cheevos:progressed(stats)
 		end,
 	})
 end
 
-function showCreditsScene()
+function showCreditsScreen()
 	setSceneTo('credits', {
 		sprites = {
 			zx:sprite({
@@ -806,6 +821,10 @@ function showCreditsScene()
 			else
 				scene.btn.error = true
 			end
+		end,
+
+		afterSceneChange = function()
+			cheevos:earned('credits')
 		end,
 	})
 
