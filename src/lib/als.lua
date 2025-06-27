@@ -3,17 +3,15 @@ local gfx <const> = pd.graphics
 local scn <const> = pd.display
 local spr <const> = gfx.sprite
 
-class('als',
-	{
-		data = {
-			unmown = {187, 170, 170, 238, 127, 85, 85, 215},
-			mown = {85, 255, 170, 255, 85, 255, 170, 255},
-			mower = {255, 255, 255, 255, 255, 224, 145, 145},
-			man = {231, 231, 247, 151, 103, 239, 211, 187},
-			cursor = {255, 207, 199, 195, 195, 199, 207, 255},
-		},
-	}
-).extends()
+class('als', {
+	data = {
+		unmown = {187, 170, 170, 238, 127, 85, 85, 215},
+		mown = {85, 255, 170, 255, 85, 255, 170, 255},
+		mower = {255, 255, 255, 255, 255, 224, 145, 145},
+		man = {231, 231, 247, 151, 103, 239, 211, 187},
+		cursor = {255, 207, 199, 195, 195, 199, 207, 255},
+	},
+}).extends()
 
 function als:init(zx)
 	als.super.init(self)

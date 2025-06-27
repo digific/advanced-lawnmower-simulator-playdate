@@ -70,3 +70,108 @@
 "menu-item-beeper" = "Beeper"
 "menu-item-crankiness" = "Crankiness"
 "menu-item-debug" = "Debug"
+
+"achievement-name-total-16" = "16 Well Mown",
+"achievement-desc-total-16" = "Mowed 16 lawns in total.",
+
+"achievement-name-good-16" = "16 Good Mows",
+"achievement-desc-good-16" = "Adequately mowed 16 lawns.",
+
+"achievement-name-bad-16" = "16 Bad Mows",
+"achievement-desc-bad-16" = "Badly mowed 16 lawns.",
+
+"achievement-name-deaths-16" = "16 Deaths",
+"achievement-desc-deaths-16" = "16 deadly patches of grass encountered.",
+
+"achievement-name-total-128" = "128 Well Mown",
+"achievement-desc-total-128" = "Mowed 128 lawns in total.",
+
+"achievement-name-good-128" = "128 Good Mows",
+"achievement-desc-good-128" = "128 lawns worthy of a corned-beef sandwich.",
+
+"achievement-name-bad-128" = "128 Bad Mows",
+"achievement-desc-bad-128" = "128 lawns mowed erratically.",
+
+"achievement-name-deaths-128" = "128 Deaths",
+"achievement-desc-deaths-128" = "128 rocks hit. Careful now!",
+
+"achievement-name-total-1982" = "1,982 Well Mown",
+"achievement-desc-total-1982" = "Mowed 1,982 lawns in total.",
+
+"achievement-name-good-1982" = "1,982 Good Mows",
+"achievement-desc-good-1982" = "1,982 super bits of grasswork.",
+
+"achievement-name-bad-1982" = "1,982 Bad Mows",
+"achievement-desc-bad-1982" = "1,982 shoddily-mown lawns.",
+
+"achievement-name-deaths-1982" = "1,982 Deaths",
+"achievement-desc-deaths-1982" = "Death by lawn x 1,982.",
+
+"achievement-name-total-9999" = "9,999 Well Mown",
+"achievement-desc-total-9999" = "Got the maximum number of well mown lawns without hitting any rocks.",
+
+"achievement-name-good-9999" = "9,999 Good Mows",
+"achievement-desc-good-9999" = "Mowed a maximum number of good mow-jobs.",
+
+"achievement-name-bad-9999" = "9,999 Bad Mows",
+"achievement-desc-bad-9999" = "Mowed a maximum number of bad mow-jobs.",
+
+"achievement-name-deaths-9999" = "9,999 Deaths",
+"achievement-desc-deaths-9999" = "Death death death death...",
+
+"achievement-name-total-10000" = "Total Mows Broken!",
+"achievement-desc-total-10000" = "You've broken the total mows scoreboard, you stupid little git.",
+
+"achievement-name-good-10000" = "Good Mows Broken!",
+"achievement-desc-good-10000" = "Too many good mows made... smashing!",
+
+"achievement-name-bad-10000" = "Bad Mows Broken!",
+"achievement-desc-bad-10000" = "Too many bad mows made... lovely!",
+
+"achievement-name-deaths-10000" = "Total Deaths Broken!",
+"achievement-desc-deaths-10000" = "Even the Grim Reaper has fled the lawn...",
+
+"achievement-name-chose-broken-mower" = "Chose a Broken Mower",
+"achievement-desc-chose-broken-mower" = "Well, I guess you tried?",
+
+"achievement-name-chose-working-mower" = "Picked the Patio Sprintette",
+"achievement-desc-chose-working-mower" = "A top-notch choice indeed!",
+
+"achievement-name-crank-to-mow" = "Crank-To-Mow™",
+"achievement-desc-crank-to-mow" = "Deployed some impressive crank-based mowing technology on that turf...",
+
+"achievement-name-mow-rating-1" = "Corned Beef Sandwich",
+"achievement-desc-mow-rating-1" = "Well done. You've earned it.",
+
+"achievement-name-mow-rating-2" = "Shoddy Job",
+"achievement-desc-mow-rating-2" = "Do it again!",
+
+"achievement-name-mow-rating-3" = "Broke the mower",
+"achievement-desc-mow-rating-3" = "Why did you do that?!",
+
+"achievement-name-mow-rating-4" = "Tea, Cakes and a Tenner",
+"achievement-desc-mow-rating-4" = "A super bit of grasswork, that.",
+
+"achievement-name-mow-rating-5" = "Bought The Lawn",
+"achievement-desc-mow-rating-5" = "Oh oh! I don't know you!",
+
+"achievement-name-mow-rating-6" = "Nail Clipped",
+"achievement-desc-mow-rating-6" = "Could've done a better mow-job myself...",
+
+"achievement-name-mow-rating-7" = "Vidal Sassoon Beater",
+"achievement-desc-mow-rating-7" = "World class grass cuttage.",
+
+"achievement-name-mow-rating-8" = "Erratically Cut",
+"achievement-desc-mow-rating-8" = "You got the questionable reference rating. Sorry!",
+
+"achievement-name-mow-rating-9" = "Boing!",
+"achievement-desc-mow-rating-9" = "Boing boing boing boing boing.",
+
+"achievement-name-mow-rating-10" = "Bendy Bullied",
+"achievement-desc-mow-rating-10" = "Super, smashing, lovely!",
+
+"achievement-name-scoreborked" = "Scoreborked!",
+"achievement-desc-scoreborked" = "You've broken every statistic... go away and don't darken my door again!",
+
+"achievement-name-credits" = "Found the credits screen",
+"achievement-desc-credits" = "Thanks for playing!",
