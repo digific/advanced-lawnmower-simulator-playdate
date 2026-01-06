@@ -273,6 +273,10 @@ function zx:sprite(args)
 			text = gfx.getLocalizedText(args.str)
 		end
 
+		if args.suffix ~= nil then
+			text = text .. args.suffix
+		end
+
 		-- maximum character per line
 		local maxChrsPerLine = args.maxChrsPerLine or (scn.getWidth() / zx.chrSize) / scale
 

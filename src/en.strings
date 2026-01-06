@@ -65,7 +65,9 @@
 
 "credits-title" = "CREDITS"
 
-"credits" = "ZX SPECTRUM GAME BY\nDUNCAN MACDONALD (RIP)\nYOUR SINCLAIR, 1988\n\nPLAYDATE PORT WRITTEN\nBY ANDY THOMAS\n\n© DIGIFIC LTD, 2025"
+"credits-1" = "ZX SPECTRUM GAME BY\nDUNCAN MACDONALD (RIP)\nYOUR SINCLAIR, 1988."
+"credits-2" = "PLAYDATE PORT BY\nANDY THOMAS."
+"credits-3" = "© DIGIFIC LTD, 2025-26."
 
 "menu-item-beeper" = "Beeper"
 "menu-item-crankiness" = "Crankiness"

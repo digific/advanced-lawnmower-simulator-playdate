@@ -56,13 +56,14 @@ function cheevos:init()
 end
 
 function cheevos:generateData()
-	data = {}
+	local data = {}
+	local type, value, handle
 
 	for v = 1, #self.targets do
 		for k = 1, #self.types do
-			local type = self.types[k]
-			local value = self.targets[v]
-			local handle = type .. '-' .. value
+			type = self.types[k]
+			value = self.targets[v]
+			handle = type .. '-' .. value
 
 			table.insert(
 				data,
@@ -80,7 +81,7 @@ function cheevos:generateData()
 	end
 
 	for k = 1, #self.earnables do
-		local handle = self.earnables[k]
+		handle = self.earnables[k]
 
 		table.insert(
 			data,
@@ -112,15 +113,13 @@ end
 
 function cheevos:progressed(stats)
 	local total = stats.good + stats.bad + stats.deaths
-	local type
-	local value
-	local achievementProgress
+	local type, value, handle
 
 	for v = 1, #self.targets do
 		for k = 1, #self.types do
-			local type = self.types[k]
-			local value = self.targets[v]
-			local handle = type .. '-' .. value
+			type = self.types[k]
+			value = self.targets[v]
+			handle = type .. '-' .. value
 
 			achievements.advanceTo(
 				handle,

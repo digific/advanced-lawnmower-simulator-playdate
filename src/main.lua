@@ -6,12 +6,12 @@
 -- Website: advancedlawnmowersimulator.com/playdate     --
 ----------------------------------------------------------
 -- This is a 'tribute' to a the original ALS on the     --
--- ZX Spectrum; The April Fool 'Your Sinclair'magazine  --
+-- ZX Spectrum; The April Fool 'Your Sinclair' magazine --
 -- once published on their cover tape & written by the  --
 -- legendary Duncan MacDonald (RIP).                    --
 --                                                      --
--- Previously, I made another tribute to the game waaay --
--- back in 2006 that ended up becoming a mildly         --
+-- Previously, I made another tribute to the game       --
+-- waaaaay back in 2006 that ended up becoming a mildly --
 -- successful Facebook app (complete with statistics    --
 -- and other sorts of gubbins),                         --
 --                                                      --
@@ -791,9 +791,22 @@ function showCreditsScreen()
 			}),
 
 			zx:sprite({
-				str = 'credits',
+				str = 'credits-1',
 				x = 1,
 				y = 4.5,
+			}),
+
+			zx:sprite({
+				str = 'credits-2',
+				suffix = ' v' .. pd.metadata.version .. '.',
+				x = 1,
+				y = 8.5,
+			}),
+
+			zx:sprite({
+				str = 'credits-3',
+				x = 1,
+				y = 11.5,
 			}),
 
 			zx:sprite({
