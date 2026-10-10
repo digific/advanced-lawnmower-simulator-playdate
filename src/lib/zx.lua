@@ -172,7 +172,7 @@ function zx:print(value, x, y, width, height)
 	end
 
 	if type(value) == 'table' and #value == 8 then
-		gfx.setPattern(value)
+		gfx.setPattern(value, 0, 0)
 
 		gfx.fillRect(
 			x,
