@@ -225,6 +225,65 @@ function zx:printToImg(value, width, height)
 end
 
 ----------------------------------------------------------------------------------------------------
+-- DRAWING
+----------------------------------------------------------------------------------------------------
+
+function zx:circle(x, y, radius)
+	local dx, dy, error = radius, 0, 1 - radius
+
+	while dx >= dy do
+		gfx.drawPixel(
+			x + dx,
+			y + dy
+		)
+
+		gfx.drawPixel(
+			x - dx,
+			y + dy
+		)
+
+		gfx.drawPixel(
+			x + dx,
+			y - dy
+		)
+
+		gfx.drawPixel(
+			x - dx,
+			y - dy
+		)
+
+		gfx.drawPixel(
+			x + dy,
+			y + dx
+		)
+
+		gfx.drawPixel(
+			x - dy,
+			y + dx
+		)
+
+		gfx.drawPixel(
+			x + dy,
+			y - dx
+		)
+
+		gfx.drawPixel(
+			x - dy,
+			y - dx
+		)
+
+		dy = dy + 1
+
+		if error < 0 then
+		  error = error + 2 * dy + 1
+		else
+		  dx -= 1
+		  error += 2 * (dy - dx) + 1
+		end
+	end
+end
+
+----------------------------------------------------------------------------------------------------
 -- SPRITE
 ----------------------------------------------------------------------------------------------------
 

@@ -187,13 +187,48 @@ function als:sprSky()
 		(self.zx.chrSize * 4)
 	)
 
-	local house = gfx.image.new('assets/img/house')
-	local sun = gfx.image.new('assets/img/sun')
-
 	gfx.pushContext(sprite.img)
 
-	house:draw(86, 7)
-	sun:draw(129, 5)
+	-- draw house
+	gfx.drawLine(
+		86,
+		32,
+		86,
+		17
+	)
+
+	for y = 1, 9 do
+		gfx.drawPixel(
+			86 + y,
+			17 - y
+		)
+	end
+
+	gfx.drawPixel(
+		96,
+		7
+	)
+
+	for y = 1, 9 do
+		gfx.drawPixel(
+			96 + y,
+			7 + y
+		)
+	end
+
+	gfx.drawLine(
+		106,
+		17,
+		106,
+		32
+	)
+
+	-- draw sun
+	zx:circle(
+		136,
+		12,
+		7
+	)
 
 	gfx.popContext()
 
